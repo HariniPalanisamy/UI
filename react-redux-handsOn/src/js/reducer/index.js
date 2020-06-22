@@ -1,7 +1,8 @@
-import { ADD_ARTICLE } from "../constants";
+import { ADD_ARTICLE, DATA_LOADED } from "../constants";
 
 const initialState = {
-    articles : []
+    articles : [],
+    remoteArticles: []
 }
 
 function reducer(state = initialState, action){
@@ -13,7 +14,12 @@ function reducer(state = initialState, action){
             articles: state.articles.concat(action.payload)
         })
     }
-    return state
+    if(action.type === DATA_LOADED){
+        return Object.assign({},state, {
+            remoteArticles: state.articles.concat(action.payload)
+        }) 
+    }
+    return state;
 }
 
 export default reducer;
